@@ -260,7 +260,7 @@ class Achievements {
             this.AchievementsScreen = new AchievementsScreen();
         }
         this.AchievementsScreen.openDialog();
-    } 
+    }
 }
 class AchievementsScreen extends Application {
 	activateListeners(html) {
@@ -282,7 +282,7 @@ class AchievementsScreen extends Application {
         };
         templateData.data = super.getData();
         templateData.title = "Farchievements";
-		
+
         const templatePath = "modules/farchievements/AchievementsScreen.html";
 		if(document.getElementsByClassName("achievementsscreen-window").length > 0){}
         AchievementsScreen.renderMenu(templatePath, templateData);
@@ -311,10 +311,10 @@ class AchievementSync{
 	  return new Promise(resolve => setTimeout(resolve, ms));
 	}
 	static async PlayAnimation(achievementsGainedList, amount){
-	
+
 		let achievementsToGain = achievementsGainedList.split(",");
 		let data;
-		let name,icon;
+		let name,icon,description;
 		let toGain;
 		let stingerVolume = game.settings.get('farchievements', 'achievementStingerVolume');
 		for(let i = 0; i < achievementsToGain.length; i++){
@@ -324,6 +324,7 @@ class AchievementSync{
 			data = game.settings.get('farchievements', 'achievementdata').split(';;;')[toGain];
 			name = data.split(":::")[1].split("////")[0];
 			icon = data.split(":::")[1].split("////")[1];
+			description = data.split(":::")[1].split("////")[2];
 			if(icon == "icon"){icon = game.settings.get('farchievements', 'standarticon')} //IF STANDARD ICON USE ICON DEFINED IN GAMESETTINGS
 			await AudioHelper.play({ src: game.settings.get('farchievements', 'achievementStinger'), volume: stingerVolume, autoplay: true, loop: false}, false);
 			await AchievementSync.sleep(1800);
@@ -332,10 +333,12 @@ class AchievementSync{
 			document.getElementById("Achievementbar").style.setProperty("display", "flex");
 			if (game.settings.get('farchievements', 'EnableAchievementMessage')){
 
-				let tempUserName = game.user.name;
 				ChatMessage.create({
 					user: game.user.id,
-					content: `${tempUserName} ${game.i18n.localize('Farchievements.GainedAchivement')} '${name}' ${game.i18n.localize('Farchievements.Achievement')}`,
+					content: `	<div class="ChatAchName">${name}</div>
+								<img class="AchIcon" src="${icon}"/>
+								<div class="ChatAchDescription">${description}</div>
+							`,
 					blind: false,
 				});
             }
@@ -351,7 +354,7 @@ class AchievementSync{
 			}
 			else
 			await AchievementSync.sleep(1000);
-			
+
 			await AchievementSync.sleep(8000);
 			document.getElementById("Achievementbar").style.setProperty("display", "none");
 		}
@@ -447,14 +450,14 @@ Hooks.on('renderSceneNavigation', async function() {
 		let bannerstyle = 'top: -200px;background: url('+style+')!important;background-size: cover !important;background-position: center !important;box-shadow: 0px -4px 6px black !important;display: flex;';
 		var el = `<div id="Achievementbar" style="display: none;" class="Achievementbar"><div id="FoundryAchievements" class="FoundryAchievementsBanner" style="`+bannerstyle+`"><img id="AchievementIMG" class="AchievementIMG" src="modules/farchievements/standardIcon.PNG"></img><p class="AchievementText"><label class="AchievementTextLabel">${game.i18n.localize('Farchievements.NewAchievement')}</label> (${game.i18n.localize('Farchievements.Achievement')}) </p><i class="Shiny"></i></div></div>`;
 		document.getElementById("notifications").innerHTML = el;
-	
+
 });
 
 Hooks.on('renderSettings', function() {
 	//ADD BUTTON TO SETTINGS
 	function refreshData(){
 		let x = 0.1;  // 0.1 seconds
-		
+
 		if(document.getElementById("FarchievementsSettings") == null && game.settings.get('farchievements', 'GameSettingsButton')){
 			$('#settings-game').append(`<div id="FarchievementsSettings" style="margin:0;"><h4>Farchievements</h4><button id="SettingsAchievementsButton" data-action="Achievements"><i class="fas fa-medal achievements-button"></i>${game.i18n.localize('Farchievements.Achievements')}</button></div>`);
 			let AchievementsButton = document.getElementById("SettingsAchievementsButton");
@@ -474,7 +477,7 @@ Hooks.on('renderSettings', function() {
 				}
 			}
 		}
-	
+
 		setTimeout(refreshData, x*1000);
 	}
 	if(game.user.isGM){
@@ -489,7 +492,7 @@ Hooks.on('renderSettings', function() {
 		}
 		WaitForReady();
 	}
-	
+
 	refreshData();
 
 });
@@ -521,7 +524,7 @@ if(message.data.content.includes("Farchievements-SyncRequest")){
 				toSYNC = dataArray.join("||");
 				console.log(toSYNC);
 				//await game.settings.set('farchievements', 'clientdataSYNC', toSYNC);
-						
+
 				console.log("Setting Achievement: " + achievementname + "(ID:"+ achievementID + ")" + " for user: " + playerName); //TODO ACTUALLY ADD THE ACHIEVEMENT
 				return;
 	}
@@ -556,7 +559,7 @@ window.farchievements_DEBUG_Reset_PlayerAchievements = async function resetPlaye
 	location.reload();
 }
 
-//PUBLICLY ACCESSIBLE FUNCTIONS		
+//PUBLICLY ACCESSIBLE FUNCTIONS
 window.Farchievements = class Farchievement{
 	static Open (){
 		$("#SettingsAchievementsButton").click()
@@ -775,6 +778,6 @@ async function SendSyncMessage() {
 	});
 
 	if(document.getElementById('achsyncnormalmode') != null)
-		if (document.getElementById('achsyncnormalmode').innerHTML != "") 
+		if (document.getElementById('achsyncnormalmode').innerHTML != "")
 			document.getElementById('achsyncnormalmode').innerHTML = "";
 }

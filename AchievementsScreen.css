@@ -264,6 +264,36 @@ p.AchDescription {
     color: white;
     padding: 5px;
 }
+
+.ChatAchName {
+    text-align-last: center;
+    background: #655f00;
+    color: #f7ff9e;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    line-break: auto;
+    font-size: 19px;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.ChatAchDescription {
+    text-align: center;
+    border: 1px groove #000000;
+    margin: 0;
+    padding: 0;
+    margin-top: -5px;
+    contain: content;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #655f00;
+    line-break: auto;
+    height: fit-content;
+    color: white;
+    padding: 5px;
+}
+
 .AchInputName {
     width: 80% !important;
     background: #00000091 !important;
@@ -438,7 +468,7 @@ label.AchievementTextLabel {
 		opacity: 0;
 		top: 0;
 		left: 0;
-  
+
 /*   gradient   */
 		background: -moz-linear-gradient(left,  rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 1%, rgba(255,255,255,0.6) 30%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.85) 70%, rgba(255,255,255,0.85) 71%, rgba(255,255,255,0) 100%); /* FF3.6+ */
 		background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(1%,rgba(255,255,255,0.03)), color-stop(30%,rgba(255,255,255,0.85)), color-stop(50%,rgba(255,255,255,0.85)), color-stop(70%,rgba(255,255,255,0.85)), color-stop(71%,rgba(255,255,255,0.85)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
@@ -447,7 +477,7 @@ label.AchievementTextLabel {
 		background: -ms-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.03) 1%,rgba(255,255,255,0.6) 30%,rgba(255,255,255,0.85) 50%,rgba(255,255,255,0.85) 70%,rgba(255,255,255,0.85) 71%,rgba(255,255,255,0) 100%); /* IE10+ */
 		background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.03) 1%,rgba(255,255,255,0.6) 30%,rgba(255,255,255,0.85) 50%,rgba(255,255,255,0.85) 70%,rgba(255,255,255,0.85) 71%,rgba(255,255,255,0) 100%); /* W3C */
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
-    
+
 /*  forming the shine element
     play around with the width, skew and gradient to get different effects
   */
@@ -458,7 +488,7 @@ label.AchievementTextLabel {
      -moz-transform: skew(-10deg,0deg);
      -ms-transform: skew(-10deg,0deg);
      -o-transform: skew(-10deg,0deg);
-  
+
 /*  animating it  */
      animation: move 2s;
 		animation-iteration-count: infinite;
